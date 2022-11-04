@@ -1,0 +1,31 @@
+int led[] = {8, 9, 10, 11, 12, 13}; // output pins
+int timelights[] = {10000, 12000, 8000, 6000, 4000, 6000}; //  milliseconds
+int numleds = 6;
+int time_quantum = 2000; // milliseconds
+
+void setup(){ 
+  Serial.begin(9600);
+  for (int i = 0; i < numleds; i++){ //setting up all led's as OUTPUT
+  pinMode(led[i], OUTPUT);
+  }
+}
+
+
+void loop() {
+  
+  int time_left;
+  for(int i = 0; i < numleds; i++) {
+  	time_left = timelights[i] - time_quantum; // getting the left time of each process
+    delay(500);
+    if(time_left != 0){ 
+      	timelights[i] = time_left; // update the value of the timelights each array
+       	digitalWrite(led[i], HIGH);
+        delay(time_quantum);   // wait for 2 seconds
+      	digitalWrite(led[i], LOW);  
+    }
+    else{	
+    	digitalWrite(led[i], LOW); //set the led low if time left is zero
+    }
+  	delay(500);
+  }
+}
